@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alex Chen - 全栈开发者个人主页卡片">
+  <meta name="theme-color" content="#667eea">
+  <title>Alex Chen - Profile Card</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --primary: #667eea; --secondary: #764ba2; --bg: linear-gradient(135deg, #667eea, #764ba2); --text-dark: #1a1a2e; --text-muted: #666; --radius: 20px; }
+
+    body {
+      min-height: 100vh; display: flex; justify-content: center; align-items: center;
+      background: var(--bg); font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      padding: 16px; overflow-x: hidden; position: relative;
+    }
+
+    /* ===== Background Decoration ===== */
+    .blob {
+      position: fixed; border-radius: 50%; filter: blur(80px); opacity: .35; pointer-events: none;
+      animation: float 8s ease-in-out infinite alternate;
+    }
+    .blob-1 { width: 300px; height: 300px; bg: #fff; top: -60px; left: -60px; animation-duration: 10s; }
+    .blob-2 { width: 250px; height: 250px; bg: #f093fb; bottom: -40px; right: -40px; animation-duration: 12s; animation-direction: reverse; }
+    @keyframes float { from { transform: translate(0, 0) scale(1); } to { transform: translate(30px, -30px) scale(1.08); } }
+
+    /* ===== Card ===== */
+    .card {
+      width: 360px; max-width: 92vw; bg: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+      border-radius: var(--radius); padding: 36px 28px 28px; text-align: center;
+      box-shadow: 0 24px 72px rgba(0,0,0,.22), 0 8px 24px rgba(102,126,234,.18);
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s;
+      position: relative; z-index: 1; animation: slideUp .6s ease-out both;
+    }
+    .card:hover { transform: translateY(-8px) rotateX(2deg); box-shadow: 0 32px 90px rgba(0,0,0,.28), 0 12px 32px rgba(102,126,234,.25); }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(32px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .avatar-wrapper { position: relative; display: inline-block; margin-bottom: 18px; }
+    .avatar-ring {
+      width: 110px; height: 110px; border-radius: 50%; padding: 3px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; justify-content: center; align-items: center; animation: ringPulse 3s ease-in-out infinite;
+    }
+    @keyframes ringPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(102,126,234,.45); } 50% { box-shadow: 0 0 0 10px rgba(102,126,234,0); } }
+    .avatar {
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+      border: 3px solid #fff; display: block;
+    }
+    .status-dot {
+      position: absolute; bottom: 6px; right: 6px; width: 18px; height: 18px;
+      border-radius: 50%; bg: #22c55e; border: 3px solid #fff;
+      animation: statusBlink 2.5s ease-in-out infinite;
+    }
+    @keyframes statusBlink { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+    .name { font-size: 23px; font-weight: 800; color: var(--text-dark); letter-spacing: -.3px; }
+    .name span { color: var(--primary); }
+    .role { font-size: 13px; color: var(--primary); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+    .bio { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 14px auto 18px; max-width: 260px; }
+
+    /* ===== Tags ===== */
+    .tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .tag { padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; bg: #f0efff; color: var(--primary); }
+
+    /* ===== Stats ===== */
+    .stats { display: flex; justify-content: space-around; border-top: 1px solid rgba(0,0,0,.06); border-bottom: 1px solid rgba(0,0,0,.06); padding: 16px 0; margin-bottom: 18px; }
+    .stat-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: default; transition: .25s; }
+    .stat-item:hover { transform: translateY(-2px); }
+    .stat-num { font-size: 21px; font-weight: 800; color: var(--text-dark); }
+    .stat-label { font-size: 11px; color: #aaa; font-weight: 500; }
+
+    /* ===== Buttons ===== */
+    .btn-group { display: flex; justify-content: center; gap: 10px; }
+    .btn {
+      padding: 9px 22px; border-radius: 999px; border: none; cursor: pointer;
+      font-size: 13px; font-weight: 700; transition: all .28s cubic-bezier(.34,1.56,.64,1);
+      display: inline-flex; align-items: center; gap: 6px; user-select: none;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; box-shadow: 0 4px 15px rgba(102,126,234,.38); }
+    .btn-primary:hover { transform: scale(1.05); box-shadow: 0 6px 22px rgba(102,126,234,.48); }
+    .btn-primary.following { background: #eee; color: var(--text-muted); box-shadow: none; }
+    .btn-outline { background: transparent; color: var(--primary); border: 2px solid rgba(102,126,234,.35); }
+    .btn-outline:hover { bg: rgba(102,126,234,.07); border-color: var(--primary); transform: scale(1.03); }
+
+    /* ===== Social Links ===== */
+    .socials { display: flex; justify-content: center; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.04); }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; bg: #f7f7fb; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: var(--text-muted); font-size: 15px; transition: .25s; }
+    .social-link:hover { bg: var(--primary); color: #fff; transform: translateY(-3px); }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 400px) { .card { padding: 28px 20px 22px; } .avatar-ring { width: 96px; height: 96px; } .name { font-size: 20px; } }
+  </style>
+</head>
+<body>
+
+  <!-- Background Blobs -->
+  <div class="blob blob-1" style="background:#fff;"></div>
+  <div class="blob blob-2" style="background:#f093fb;"></div>
+
+  <div class="card">
+    <div class="avatar-wrapper">
+      <div class="avatar-ring"><img class="avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Alex Chen"></div>
+      <span class="status-dot"></span>
+    </div>
+    <h1 class="name">Alex <span>Chen</span></h1>
+    <p class="role">Full Stack Developer</p>
+    <p class="bio">热爱开源与创意开发，专注构建优雅的用户体验。用代码让世界更美好。</p>
+    <div class="tags">
+      <span class="tag">Vue.js</span><span class="tag">Node.js</span><span class="tag">TypeScript</span><span class="tag">Docker</span>
+    </div>
+    <div class="stats">
+      <div class="stat-item"><span class="stat-num" data-target="128">0</span><span class="stat-label">项目</span></div>
+      <div class="stat-item"><span class="stat-num" data-target="3200">0</span><span class="stat-label">粉丝</span></div>
+      <div class="stat-item"><span class="stat-num" data-target="56">0</span><span class="stat-label">文章</span></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" id="followBtn">✦ 关注</button>
+      <button class="btn btn-outline">✉ 私信</button>
+    </div>
+    <div class="socials">
+      <a class="social-link" href="#" title="GitHub">⌂</a>
+      <a class="social-link" href="#" title="Twitter">𝕏</a>
+      <a class="social-link" href="#" title="LinkedIn">in</a>
+    </div>
+  </div>
+
+<script>
+// 关注按钮切换
+const followBtn = document.getElementById('followBtn');
+let following = false;
+followBtn.addEventListener('click', () => {
+  following = !following;
+  followBtn.textContent = following ? '✓ 已关注' : '✦ 关注';
+  followBtn.classList.toggle('following', following);
+});
+
+// 数字滚动动画
+function animateCounters() {
+  document.querySelectorAll('.stat-num').forEach(el => {
+    const target = +el.dataset.target;
+    const duration = 1200;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      el.textContent = target > 100 ? Math.round(target * eased / 100) + '.' + String(target).split('.')[1] || 'k' : Math.round(target * eased);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+// 入场后触发数字动画
+setTimeout(animateCounters, 400);
+
+// Reduced motion 支持
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.stat-num').forEach(el => el.textContent = el.dataset.target.replace(/(\d)(?=(\d{3})+$)/g,'$1.'));
+}
+</script>
+</body>
+</html>
