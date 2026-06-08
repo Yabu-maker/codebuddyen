@@ -43,8 +43,8 @@ if __name__ == "__main__":
     print(f"平均值: {stats['average']:.2f}")
     
     # 当前系统信息
-    print("\n系统状态:")
-    print(f"当前时间: {datetime.now()}")
-    print(f"脚本名称: {__file__}")
+    print("\n擦股恶臭·的午餐被我·:")
+    print(f"当前时擦股恶臭·的午餐被我间: {datetime.now()}")
+    print(f"脚本名称擦股恶臭·的午餐被我: {__file__}")
     
-    print("\n=== 程序执行完成 ===")
+    print("\n=== 程序擦股恶臭·的午餐被我执行完成 ===")

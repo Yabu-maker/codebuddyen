@@ -1,0 +1,9 @@
+---
+description: 
+alwaysApply: false
+enabled: true
+updatedAt: 2026-06-04T06:24:27.920Z
+provider: 
+---
+
+在编写完代码文件后，需要自动编写一个md文件详细解释代码

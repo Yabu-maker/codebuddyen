@@ -1,0 +1,23 @@
+{
+  "name": "_auto_df2161c71de646e2bf1d1b097db987b6",
+  "leadAgentId": "df2161c71de646e2bf1d1b097db987b6",
+  "workspacePath": "/Users/vinyaliu/Documents/programs/codebuddyen",
+  "createdAt": "2026-06-04T11:40:26.942Z",
+  "options": {
+    "workspacePath": "/Users/vinyaliu/Documents/programs/codebuddyen",
+    "isAutoTeam": true
+  },
+  "members": [
+    {
+      "memberId": "team-lead@_auto_df2161c71de646e2bf1d1b097db987b6",
+      "name": "team-lead",
+      "role": "Team Lead - coordinates the team and interacts with the user"
+    },
+    {
+      "memberId": "blog-translator@_auto_df2161c71de646e2bf1d1b097db987b6",
+      "name": "blog-translator",
+      "role": "博客文档翻译代理"
+    }
+  ],
+  "isAutoTeam": true
+}
