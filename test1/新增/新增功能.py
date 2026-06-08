@@ -5,9 +5,24 @@ def add(a, b):
     """两数相加"""
     return a + b
 
-def greet(name):
+def greet(name, time_of_day="白天", is_formal=False):
     """个性化问候"""
-    return f"欢迎你, {name}! ✨"
+    
+    if is_formal:
+        title = "尊敬的"
+    else:
+        title = "亲爱的"
+        
+    time_greetings = {
+        "早上": "早安",
+        "下午": "午安",
+        "晚上": "晚安",
+        "白天": "你好"
+    }
+    
+    greeting = time_greetings.get(time_of_day, "你好")
+    
+    return f"{greeting}，{title}{name}！欢迎你！✨"
 
 def multiply(a, b):
     """两数相乘"""
