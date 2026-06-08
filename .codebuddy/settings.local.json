@@ -1,0 +1,7 @@
+{
+  "enabledPlugins": {
+    "product-management@cb_teams_marketplace": false,
+    "document-skills@cb_teams_marketplace": false,
+    "modern-webapp@cb_teams_marketplace": true
+  }
+}
